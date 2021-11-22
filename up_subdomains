@@ -1,0 +1,23 @@
+### This script will identify subdomains that are up in a list specified on line 7
+
+from urllib.request import urlopen
+from urllib.error import HTTPError
+from urllib.error import URLError
+
+file = open('filename', 'rt' ) # opens specified text file
+domains = file.read().splitlines() # reads lines of text file
+#print(domains)
+
+
+for i in domains:
+    try:
+        url = 'https://' + i # adds https:// to subdomain
+        response = urlopen(url) # sends request to get response
+    except HTTPError as e:
+        print(e)
+    except URLError as e:
+        print( i + ' - Cannot reach')
+    else:
+        status_code = response.getcode()
+        print(i + ' ' + str(status_code))
+
